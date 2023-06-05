@@ -17,4 +17,8 @@ const fetchImages = async (query, page) => {
   return await res.json();
 };
 
-export default fetchImages;
+const api = {
+  fetchImages,
+};
+
+export default api;

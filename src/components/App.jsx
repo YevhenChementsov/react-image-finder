@@ -1,11 +1,16 @@
 import { Component } from 'react';
 
-import SearchBar from './SearchBar/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
+import SearchBar from './SearchBar/SearchBar';
 
 export default class App extends Component {
   state = {
     value: '',
+    error: null,
+  };
+
+  handleError = error => {
+    this.setState({ error });
   };
 
   handleSearchBarSubmit = value => {
@@ -14,10 +19,17 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <SearchBar onSubmit={this.handleSearchBarSubmit} />
-        <ImageGallery value={this.state.value} />
-      </div>
+      <>
+        {/* Main Error Message */}
+        {this.state.error ? (
+          <h1>{this.state.error.message}</h1>
+        ) : (
+          <div>
+            <SearchBar onSubmit={this.handleSearchBarSubmit} />
+            <ImageGallery value={this.state.value} onError={this.handleError} />
+          </div>
+        )}
+      </>
     );
   }
 }

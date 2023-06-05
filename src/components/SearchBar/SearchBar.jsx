@@ -1,5 +1,6 @@
 import { Component } from 'react';
 
+import { ReactComponent as SearchButton } from 'icons/search.svg';
 export default class SearchBar extends Component {
   state = {
     value: '',
@@ -28,7 +29,9 @@ export default class SearchBar extends Component {
             type="text"
             value={this.state.value}
           />
-          <button type="submit">Search</button>
+          <button type="submit">
+            <SearchButton />
+          </button>
         </form>
       </header>
     );
