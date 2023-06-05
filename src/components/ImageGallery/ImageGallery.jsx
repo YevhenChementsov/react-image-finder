@@ -1,9 +1,12 @@
 import { Component } from 'react';
 
-import { ToastContainer, Zoom, toast } from 'react-toastify';
+import Modal from 'components/Modal/Modal';
+import { toast } from 'react-toastify';
 import api from 'services/api';
+import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
+import { ImageItem, ImageList } from './ImageGallery.styled';
 
-export default class ImageGallery extends Component {
+class ImageGallery extends Component {
   state = {
     activeImageIndex: null,
     currentPage: 1,
@@ -15,7 +18,10 @@ export default class ImageGallery extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    if (prevProps.value !== this.props.value) {
+    if (
+      prevProps.value !== this.props.value ||
+      prevState.currentPage !== this.state.currentPage
+    ) {
       try {
         this.setState({ showLoader: true });
 
@@ -25,7 +31,7 @@ export default class ImageGallery extends Component {
         );
 
         if (!hits.length) {
-          toast.warning('Please, enter proper query!');
+          toast.error('Please, enter proper query!');
         }
 
         this.setState(({ images }) => ({
@@ -51,30 +57,42 @@ export default class ImageGallery extends Component {
     }
   }
 
+  toggleModal = index => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+      activeImageIndex: index,
+    }));
+  };
+
   render() {
+    const { images, showModal, activeImageIndex } = this.state;
+
     return (
       <>
-        <ul>
-          {this.state.images.map(image => (
-            <li key={image.id}>
-              <img src={image.webformatURL} alt={image.tags} />
-            </li>
+        <ImageList>
+          {images.map(({ id, webformatURL, largeImageURL, tags }, index) => (
+            <ImageItem key={id} onClick={() => this.toggleModal(index)}>
+              <ImageGalleryItem
+                imageUrl={webformatURL}
+                modalImageUrl={largeImageURL}
+                imageDescription={tags}
+              />
+            </ImageItem>
           ))}
-        </ul>
-        <ToastContainer
-          position="top-right"
-          transition={Zoom}
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss={false}
-          draggable={false}
-          pauseOnHover={false}
-          theme="colored"
-        />
+          {showModal && (
+            <Modal onClose={this.toggleModal}>
+              {
+                <img
+                  src={images[activeImageIndex].largeImageURL}
+                  alt={images.tags}
+                />
+              }
+            </Modal>
+          )}
+        </ImageList>
       </>
     );
   }
 }
+
+export default ImageGallery;
