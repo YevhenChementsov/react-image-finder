@@ -2,7 +2,7 @@ import { Component } from 'react';
 
 import { ReactComponent as SearchIcon } from 'icons/search.svg';
 import { toast } from 'react-toastify';
-import { SearchButton } from './SearchBar.styled';
+import { Header, Input, Button, Form } from './SearchBar.styled';
 export default class SearchBar extends Component {
   state = {
     value: '',
@@ -12,7 +12,7 @@ export default class SearchBar extends Component {
     this.setState({ value });
   };
 
-  handleSubit = e => {
+  handleSubmit = e => {
     e.preventDefault();
 
     if (this.state.value.trim() === '') {
@@ -25,9 +25,12 @@ export default class SearchBar extends Component {
 
   render() {
     return (
-      <header>
-        <form onSubmit={this.handleSubit}>
-          <input
+      <Header>
+        <Form onSubmit={this.handleSubmit}>
+          <Button type="submit">
+            <SearchIcon width="16" height="16" />
+          </Button>
+          <Input
             autoComplete="off"
             autoFocus
             name="value"
@@ -36,11 +39,8 @@ export default class SearchBar extends Component {
             type="text"
             value={this.state.value}
           />
-          <SearchButton type="submit">
-            <SearchIcon width="16" height="16" />
-          </SearchButton>
-        </form>
-      </header>
+        </Form>
+      </Header>
     );
   }
 }
