@@ -9,6 +9,7 @@ export const Backdrop = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1200;
 
   background-color: rgba(0, 0, 0, 0.8);
 `;

@@ -1,5 +1,7 @@
 import { Component } from 'react';
 
+import LoadMoreButton from 'components/LoadMoreButton/LoadMoreButton';
+import Loader from 'components/Loader/Loader';
 import Modal from 'components/Modal/Modal';
 import { toast } from 'react-toastify';
 import api from 'services/api';
@@ -45,14 +47,12 @@ class ImageGallery extends Component {
           }
         });
       } finally {
-        if (prevState.images.length > 11) {
+        this.setState({ showLoader: false }, () =>
           window.scrollTo({
             top: document.documentElement.scrollHeight,
             behavior: 'smooth',
-          });
-        }
-
-        this.setState({ showLoader: false });
+          }),
+        );
       }
     }
   }
@@ -64,32 +64,49 @@ class ImageGallery extends Component {
     }));
   };
 
+  loadMoreImages = () => {
+    if (this.state.images.length === this.state.totalImages) {
+      return toast.error('There is no more images to show');
+    }
+
+    this.setState(({ currentPage }) => ({ currentPage: currentPage + 1 }));
+  };
+
   render() {
-    const { images, showModal, activeImageIndex } = this.state;
+    const { images, showLoader, showModal, activeImageIndex } = this.state;
 
     return (
       <>
-        <ImageList>
-          {images.map(({ id, webformatURL, largeImageURL, tags }, index) => (
-            <ImageItem key={id} onClick={() => this.toggleModal(index)}>
-              <ImageGalleryItem
-                imageUrl={webformatURL}
-                modalImageUrl={largeImageURL}
-                imageDescription={tags}
-              />
-            </ImageItem>
-          ))}
-          {showModal && (
-            <Modal onClose={this.toggleModal}>
-              {
-                <img
-                  src={images[activeImageIndex].largeImageURL}
-                  alt={images.tags}
+        {images.length > 1 && (
+          <ImageList>
+            {images.map(({ id, webformatURL, largeImageURL, tags }, index) => (
+              <ImageItem key={id} onClick={() => this.toggleModal(index)}>
+                <ImageGalleryItem
+                  imageUrl={webformatURL}
+                  modalImageUrl={largeImageURL}
+                  imageDescription={tags}
                 />
-              }
-            </Modal>
-          )}
-        </ImageList>
+              </ImageItem>
+            ))}
+          </ImageList>
+        )}
+
+        {!showLoader && images.length > 1 && (
+          <LoadMoreButton onSearch={this.loadMoreImages} />
+        )}
+
+        {showLoader && <Loader />}
+
+        {showModal && (
+          <Modal onClose={this.toggleModal}>
+            {
+              <img
+                src={images[activeImageIndex].largeImageURL}
+                alt={images.tags}
+              />
+            }
+          </Modal>
+        )}
       </>
     );
   }

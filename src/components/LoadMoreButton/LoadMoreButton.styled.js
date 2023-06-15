@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const LoadButton = styled.button`
   padding: 8px 16px;
-  border-radius: 2px;
+  border-radius: 12px;
   background-color: #3f51b5;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
@@ -24,4 +24,8 @@ export const LoadButton = styled.button`
   :focus {
     background-color: #303f9f;
   }
+`;
+
+export const ButtonWrapper = styled.div`
+  margin: 0 auto;
 `;

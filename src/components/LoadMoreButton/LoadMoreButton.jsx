@@ -1,7 +1,13 @@
-import { LoadButton } from './LoadMoreButton.styled';
+import { ButtonWrapper, LoadButton } from './LoadMoreButton.styled';
 
-const LoadMoreButton = () => {
-  return <LoadButton type="button">Load more</LoadButton>;
+const LoadMoreButton = ({ onSearch }) => {
+  return (
+    <ButtonWrapper>
+      <LoadButton type="button" onClick={onSearch}>
+        Load more
+      </LoadButton>
+    </ButtonWrapper>
+  );
 };
 
 export default LoadMoreButton;

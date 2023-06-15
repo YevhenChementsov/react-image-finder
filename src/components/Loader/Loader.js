@@ -1,7 +1,17 @@
-import { InfinitySpin } from 'react-loader-spinner';
+import { TailSpin } from 'react-loader-spinner';
 
 const Loader = () => {
-  return <InfinitySpin width="100" color="rgba(0, 0, 0, 0.8)" />;
+  return (
+    <TailSpin
+      height="80"
+      width="80"
+      color="#40e0d0"
+      ariaLabel="tail-spin-loading"
+      radius="1"
+      wrapperStyle={{ justifyContent: 'center' }}
+      visible={true}
+    />
+  );
 };
 
 export default Loader;
