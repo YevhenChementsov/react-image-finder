@@ -1,16 +1,9 @@
 import { Component } from 'react';
 
 import { ToastContainer, Zoom } from 'react-toastify';
-import styled from 'styled-components';
-import ImageGallery from './ImageGallery/ImageGallery';
-import SearchBar from './SearchBar/SearchBar';
-
-const AppWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 16px;
-  padding-bottom: 24px;
-`;
+import ImageGallery from '../ImageGallery/ImageGallery';
+import SearchBar from '../SearchBar/SearchBar';
+import { AppWrapper, ErrorMessage } from './App.styled';
 
 export default class App extends Component {
   state = {
@@ -30,7 +23,7 @@ export default class App extends Component {
     return (
       <>
         {this.state.error ? (
-          <h1>{this.state.error.message}</h1>
+          <ErrorMessage>{this.state.error.message}</ErrorMessage>
         ) : (
           <AppWrapper>
             <SearchBar onSubmit={this.handleSubmit} />

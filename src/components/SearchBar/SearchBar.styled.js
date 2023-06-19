@@ -51,7 +51,7 @@ export const Input = styled.input`
   width: 100%;
   height: 36px;
   font: inherit;
-  font-size: 18px;
+  font-size: calc(16px + 2 * ((100vw - 320px) / (1920 - 320)));
   border: none;
   outline: none;
   padding-top: 5px;
@@ -61,6 +61,6 @@ export const Input = styled.input`
 
   &::placeholder {
     font: inherit;
-    font-size: 18px;
+    font-size: calc(16px + 2 * ((100vw - 320px) / (1920 - 320)));
   }
 `;

@@ -20,56 +20,68 @@ class ImageGallery extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    if (
-      prevProps.value !== this.props.value ||
-      prevState.currentPage !== this.state.currentPage
-    ) {
-      try {
-        this.setState({ showLoader: true });
-
-        const { hits, totalHits } = await api.fetchImages(
-          this.props.value,
-          this.state.currentPage,
-        );
-
-        if (!hits.length) {
-          toast.error('Please, enter proper query!');
-        }
-
-        this.setState(({ images }) => ({
-          images: [...images, ...hits],
-          totalImages: totalHits,
-        }));
-      } catch (error) {
-        this.setState({ error }, () => {
-          if (this.props.onError) {
-            this.props.onError(error);
-          }
-        });
-      } finally {
-        this.setState({ showLoader: false }, () =>
-          window.scrollTo({
-            top: document.documentElement.scrollHeight,
-            behavior: 'smooth',
-          }),
-        );
-      }
+    if (prevProps.value !== this.props.value) {
+      this.setState(
+        {
+          images: [],
+          currentPage: 1,
+        },
+        () => this.fetchImagesAndPhoto(),
+      );
     }
   }
+
+  fetchImagesAndPhoto = async () => {
+    const { value, onError } = this.props;
+    const { currentPage } = this.state;
+
+    try {
+      this.setState({ showLoader: true });
+
+      const { hits, totalHits } = await api.fetchImages(value, currentPage);
+
+      if (!hits.length) {
+        toast.error('Please, enter a proper query!');
+      }
+
+      this.setState(({ images }) => ({
+        images: [...images, ...hits],
+        totalImages: totalHits,
+      }));
+    } catch (error) {
+      this.setState({ error }, () => {
+        if (onError) {
+          onError(error);
+        }
+      });
+    } finally {
+      this.setState({ showLoader: false }, () =>
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth',
+        }),
+      );
+    }
+  };
+
+  loadMoreImages = () => {
+    const { images, totalImages } = this.state;
+
+    if (images.length === totalImages) {
+      return toast.error('There is no more images to show');
+    }
+
+    this.setState(
+      ({ currentPage }) => ({ currentPage: currentPage + 1 }),
+      () => this.fetchImagesAndPhoto(),
+    );
+  };
 
   toggleModal = index => {
     this.setState(({ showModal }) => ({
       showModal: !showModal,
       activeImageIndex: index,
     }));
-  };
-
-  loadMoreImages = () => {
-    if (this.state.images.length === this.state.totalImages) {
-      return toast.error('There is no more images to show');
-    }
-
-    this.setState(({ currentPage }) => ({ currentPage: currentPage + 1 }));
   };
 
   render() {
