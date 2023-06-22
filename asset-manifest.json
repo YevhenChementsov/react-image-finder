@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.e349b130.css",
-    "main.js": "/static/js/main.7f1920a3.js",
-    "index.html": "/index.html",
-    "static/media/search.svg": "/static/media/search.9d27fe1809cdb065fa910805a7a64e38.svg",
-    "static/media/circle-up.svg": "/static/media/circle-up.3af4b05f803f682799a54f86d75669f2.svg",
-    "main.e349b130.css.map": "/static/css/main.e349b130.css.map",
-    "main.7f1920a3.js.map": "/static/js/main.7f1920a3.js.map"
+    "main.css": "/react-image-finder/static/css/main.e349b130.css",
+    "main.js": "/react-image-finder/static/js/main.22bf5e68.js",
+    "index.html": "/react-image-finder/index.html",
+    "static/media/search.svg": "/react-image-finder/static/media/search.2b8c09ff916b66a76f44a835ffb39aa2.svg",
+    "static/media/circle-up.svg": "/react-image-finder/static/media/circle-up.f3f562ecb85da5337fd7896444202e6e.svg",
+    "main.e349b130.css.map": "/react-image-finder/static/css/main.e349b130.css.map",
+    "main.22bf5e68.js.map": "/react-image-finder/static/js/main.22bf5e68.js.map"
   },
   "entrypoints": [
     "static/css/main.e349b130.css",
-    "static/js/main.7f1920a3.js"
+    "static/js/main.22bf5e68.js"
   ]
 }
