@@ -10,7 +10,7 @@ export const ToTopButton = styled(ScrollToTop)`
   padding: 0;
   border-radius: 50%;
   background-color: transparent;
-  color: #26327f;
+  color: #3f51b5;
   opacity: 0.5;
   box-shadow: 0 0px 16px 0 #8480b1;
   transition: background-color 0.3s, opacity 0.5s;
