@@ -3,6 +3,7 @@ import { Component } from 'react';
 import LoadMoreButton from 'components/LoadMoreButton/LoadMoreButton';
 import Loader from 'components/Loader/Loader';
 import Modal from 'components/Modal/Modal';
+import ScrollToTopButton from 'components/ScrollToTopButton/ScrollToTopButton';
 import { toast } from 'react-toastify';
 import api from 'services/api';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
@@ -90,17 +91,22 @@ class ImageGallery extends Component {
     return (
       <>
         {images.length > 1 && (
-          <ImageList>
-            {images.map(({ id, webformatURL, largeImageURL, tags }, index) => (
-              <ImageItem key={id} onClick={() => this.toggleModal(index)}>
-                <ImageGalleryItem
-                  imageUrl={webformatURL}
-                  modalImageUrl={largeImageURL}
-                  imageDescription={tags}
-                />
-              </ImageItem>
-            ))}
-          </ImageList>
+          <>
+            <ImageList>
+              {images.map(
+                ({ id, webformatURL, largeImageURL, tags }, index) => (
+                  <ImageItem key={id} onClick={() => this.toggleModal(index)}>
+                    <ImageGalleryItem
+                      imageUrl={webformatURL}
+                      modalImageUrl={largeImageURL}
+                      imageDescription={tags}
+                    />
+                  </ImageItem>
+                ),
+              )}
+            </ImageList>
+            <ScrollToTopButton />
+          </>
         )}
 
         {!showLoader && images.length > 1 && (

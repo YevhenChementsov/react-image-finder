@@ -8,9 +8,9 @@ export const ImageItem = styled.li`
 
 export const ImageList = styled.ul`
   display: grid;
-  max-width: calc(100vw - 3rem);
-  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-  grid-gap: 1rem;
+  max-width: calc(100vw - 48px);
+  grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+  grid-gap: 16px;
   margin-top: 0;
   margin-bottom: 0;
   padding: 0;
