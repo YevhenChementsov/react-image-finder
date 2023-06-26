@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { ButtonWrapper, LoadButton } from './LoadMoreButton.styled';
 
 const LoadMoreButton = ({ onSearch }) => {
@@ -8,6 +9,10 @@ const LoadMoreButton = ({ onSearch }) => {
       </LoadButton>
     </ButtonWrapper>
   );
+};
+
+LoadMoreButton.propTypes = {
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default LoadMoreButton;

@@ -1,5 +1,6 @@
 import { Component } from 'react';
 
+import PropTypes from 'prop-types';
 import { RemoveScroll } from 'react-remove-scroll';
 import { createPortal } from 'react-dom';
 import { Backdrop, Content } from './Modal.styled';
@@ -7,6 +8,11 @@ import { Backdrop, Content } from './Modal.styled';
 const modalRoot = document.querySelector('#modal-root');
 
 class Modal extends Component {
+  static propTypes = {
+    onClose: PropTypes.func.isRequired,
+    children: PropTypes.node,
+  };
+
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
   }

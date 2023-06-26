@@ -1,9 +1,14 @@
 import { Component } from 'react';
 
 import { ReactComponent as SearchIcon } from 'icons/search.svg';
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { Button, Form, Header, Input } from './SearchBar.styled';
 export default class SearchBar extends Component {
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
+
   state = {
     value: '',
   };

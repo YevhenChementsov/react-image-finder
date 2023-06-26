@@ -4,12 +4,18 @@ import LoadMoreButton from 'components/LoadMoreButton/LoadMoreButton';
 import Loader from 'components/Loader/Loader';
 import Modal from 'components/Modal/Modal';
 import ScrollToTopButton from 'components/ScrollToTopButton/ScrollToTopButton';
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import api from 'services/api';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import { ImageItem, ImageList } from './ImageGallery.styled';
 
 class ImageGallery extends Component {
+  static propTypes = {
+    onError: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired,
+  };
+
   state = {
     activeImageIndex: null,
     currentPage: 1,
