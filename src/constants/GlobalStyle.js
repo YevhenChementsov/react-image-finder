@@ -19,8 +19,8 @@ export const GlobalStyle = createGlobalStyle`
 		overflow: hidden;
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 			Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-		color: #212121;
-		background-color: #fff;
+		color: ${props => props.theme.colors.black};
+		background-color: ${props => props.theme.colors.white};
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 	}

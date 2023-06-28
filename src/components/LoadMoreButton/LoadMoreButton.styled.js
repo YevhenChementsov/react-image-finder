@@ -3,11 +3,11 @@ import styled from 'styled-components';
 export const LoadButton = styled.button`
   padding: 8px 16px;
   border-radius: 12px;
-  background-color: #3f51b5;
+  background-color: ${props => props.theme.colors.button};
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
   display: inline-block;
-  color: #fff;
+  color: ${props => props.theme.colors.white};
   border: 0;
   text-decoration: none;
   cursor: pointer;
@@ -22,7 +22,7 @@ export const LoadButton = styled.button`
 
   &:hover,
   :focus {
-    background-color: #303f9f;
+    background-color: ${props => props.theme.colors.buttonHover};
   }
 `;
 
