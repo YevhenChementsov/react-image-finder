@@ -25,8 +25,10 @@
     /* Aliases with default import */
     "paths": {
       "components/*": ["./src/components/*"],
+      "services/*": ["./src/services/*"],
+      "icons/*": ["./src/icons/*"],
       "constants/*": ["./src/constants/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "src/vite-env.d.ts"]
 }

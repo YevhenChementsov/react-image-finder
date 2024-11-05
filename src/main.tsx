@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { ThemeProvider } from 'styled-components';
 
 import { theme } from 'constants/theme';
-import App from './components/App/App';
+import { App } from './components/App/App';
 import { GlobalStyle } from './constants/GlobalStyle';
 
 import 'modern-normalize/modern-normalize.css';

@@ -20,7 +20,8 @@
     "react-loader-spinner": "^6.1.6",
     "react-remove-scroll": "^2.6.0",
     "react-scroll-to-top": "^3.0.0",
-    "react-toastify": "^10.0.6"
+    "react-toastify": "^10.0.6",
+    "vite-plugin-svgr": "^4.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
