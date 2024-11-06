@@ -1,36 +1,41 @@
 import { Component } from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
 
-// import ImageGallery from '../ImageGallery/ImageGallery';
-// import SearchBar from '../SearchBar/SearchBar';
+import { ImageGallery } from 'components/ImageGallery/ImageGallery';
+import { SearchBar } from 'components/SearchBar/SearchBar';
 
-// import { AppWrapper, ErrorMessage } from './App.styled';
+import { AppWrapper, ErrorMessage } from './App.styled';
 
-export class App extends Component {
-  state = {
+export interface AppState {
+  value: string;
+  error: string | null;
+}
+
+export class App extends Component<Record<string, never>, AppState> {
+  state: AppState = {
     value: '',
     error: null,
   };
 
-  // handleError = error => {
-  //   this.setState({ error });
-  // };
+  handleError = (error: string) => {
+    this.setState({ error });
+  };
 
-  // handleSubmit = value => {
-  //   this.setState({ value });
-  // };
+  handleSubmit = (value: string) => {
+    this.setState({ value });
+  };
 
   render() {
     return (
       <>
-        {/* {this.state.error ? (
-          <ErrorMessage>{this.state.error.message}</ErrorMessage>
+        {this.state.error ? (
+          <ErrorMessage>{this.state.error}</ErrorMessage>
         ) : (
           <AppWrapper>
             <SearchBar onSubmit={this.handleSubmit} />
             <ImageGallery value={this.state.value} onError={this.handleError} />
           </AppWrapper>
-        )} */}
+        )}
         <ToastContainer
           position="top-right"
           transition={Zoom}

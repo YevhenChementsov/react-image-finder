@@ -1,6 +1,10 @@
 import { ButtonWrapper, LoadButton } from './LoadMoreButton.styled';
 
-export function LoadMoreButton({ onSearch }) {
+interface LoadMoreButtonProps {
+  onSearch: () => void;
+}
+
+export function LoadMoreButton({ onSearch }: LoadMoreButtonProps) {
   return (
     <ButtonWrapper>
       <LoadButton type="button" onClick={onSearch}>

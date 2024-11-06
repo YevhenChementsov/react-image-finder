@@ -13,11 +13,8 @@ interface SearchBarState {
   value: string;
 }
 
-export default class SearchBar extends Component<
-  SearchBarProps,
-  SearchBarState
-> {
-  state = {
+export class SearchBar extends Component<SearchBarProps, SearchBarState> {
+  state: SearchBarState = {
     value: '',
   };
 
