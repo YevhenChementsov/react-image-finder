@@ -7,7 +7,7 @@ import { LoadMoreButton } from 'components/LoadMoreButton/LoadMoreButton';
 import { Loader } from 'components/Loader/Loader';
 import { Modal } from 'components/Modal/Modal';
 import { ScrollToTopButton } from 'components/ScrollToTopButton/ScrollToTopButton';
-import { getErrorMessage } from 'components/helpers/getErrorMessage';
+import { getErrorMessage } from '../../helpers/getErrorMessage';
 import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
 
 import { ImageItem, ImageList } from './ImageGallery.styled';

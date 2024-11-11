@@ -27,7 +27,8 @@
       "components/*": ["./src/components/*"],
       "services/*": ["./src/services/*"],
       "icons/*": ["./src/icons/*"],
-      "constants/*": ["./src/constants/*"]
+      "constants/*": ["./src/constants/*"],
+      "helpers/*": ["./src/helpers/*"]
     }
   },
   "include": ["src", "src/vite-env.d.ts"]

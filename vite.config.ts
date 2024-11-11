@@ -14,6 +14,7 @@ export default defineConfig({
       constants: resolve(__dirname, 'src/constants'),
       icons: resolve(__dirname, 'src/icons'),
       services: resolve(__dirname, 'src/services'),
+      helpers: resolve(__dirname, 'src/helpers'),
     },
   },
 });

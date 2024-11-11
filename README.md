@@ -1,50 +1,135 @@
-# React + TypeScript + Vite
+**Читать на других языках: [Українська](./docs/README.ua.md),
+[English](./docs/README.en.md).**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Жизненный цикл компонента. HTTP запросы.
 
-Currently, two official plugins are available:
+_В этом разделе курса я изучу, как работать с внешними API для поиска
+изображений, а также буду практиковаться с управлением состоянием, уведомлениями
+и модальными окнами в React. В рамках задачи я создам приложение для поиска
+изображений с пагинацией, где пользователи смогут находить изображения по
+ключевым словам, загружать больше изображений по нажатию кнопки и открывать
+изображения в полном размере._
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+<details>
+<summary>Превью приложения для поиска изображений</summary>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+![Превью приложения для поиска изображений](./docs/mockup/preview.jpg)
 
-- Configure the top-level `parserOptions` property like this:
+</details>
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+---
+
+#### Приложение будет включать следующие функции и компоненты:
+
+1. **Базовая структура приложения и запросы к API**: Я создам корневой компонент
+   `<App>`, который будет управлять состоянием и осуществлять запросы к API для
+   получения изображений. Приложение будет работать с API
+   [Pixabay](https://pixabay.com/api/docs/) и отправлять запрос при каждом новом
+   поиске, получая изображения на основе ключевого слова, введенного
+   пользователем. Я создам начальное состояние с полем `images` для хранения
+   списка изображений, `query` для поискового запроса и `page` для отслеживания
+   текущей страницы пагинации.
+
+```ts
+// Начальное состояние в <App>
+state = {
+  images: [],
+  query: '',
+  page: 1,
+};
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+<details>
+<summary><b><em>Инструкция Pixabay API</b></em></summary><br>
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```ts
+// URL-строка HTTP-запроса.
+https://pixabay.com/api/?q=cat&page=1&key=your_key&image_type=photo&orientation=horizontal&per_page=12
 ```
+
+Pixabay API поддерживает пагинацию, по умолчанию параметр `page` равен `1`. В
+ответе должно приходить по 12 объектов. Это устанавливается в параметре
+`per_page`. При поиске по новому ключевому слову, необходимо сбрасывать значение
+`page` в `1`.
+
+В ответе от api приходит массив объектов, в которых интересны только следующие
+свойства:
+
+- `id` - уникальный идентификатор
+- `webformatURL` - ссылка на маленькое изображение для списка карточек
+- `largeImageURL` - ссылка на большое изображение для модального окна
+
+</details>
+<br>
+
+2. **Компоненты для поиска и отображения галереи**: Я создам несколько
+   компонентов для разделения логики:
+
+   - `<SearchBar>` — компонент с формой для ввода поискового запроса. Принимает
+     один пропс `onSubmit` - функцию для передачи значения инпута при сабмите
+     формы. При отправке формы он будет обновлять состояние `query` в корневом
+     компоненте.
+   - `<ImageGallery>` — компонент для отображения галереи изображений. Он будет
+     получать данные через пропсы и отображать список карточек для каждого
+     изображения.
+   - `<ImageGalleryItem>` — компонент для каждого изображения в галерее, который
+     будет рендерить превью изображения с возможностью открытия его в полном
+     размере.
+
+     <br>
+
+3. **Реализация кнопки "Загрузить еще"**: Для поддержки пагинации я добавлю
+   компонент-кнопку `<LoadMoreButton>`, которая будет отображаться внизу галереи
+   и загружать следующую страницу изображений. При нажатии на кнопку будет
+   увеличиваться значение `page` в состоянии, и приложение будет делать
+   дополнительный запрос к API для получения новых изображений. Кнопка должна
+   рендерится только тогда, когда есть какие-то загруженные изображения. Если
+   массив изображений пуст, кнопка не будет рендерится.
+
+   <br>
+
+4. **Уведомления и обработка ошибок**: Для информирования пользователя об
+   ошибках и отсутствии результатов поиска я интегрирую react-toastify. Если
+   поиск не вернет результаты или произойдет ошибка при запросе, то появится
+   уведомление.
+
+   <br>
+
+5. **Открытие изображения в модальном окне**: Для отображения изображения в
+   полном размере я добавлю компонент `<Modal>`, который будет открываться при
+   клике на изображение в галерее. Модальное окно будет закрываться при клике
+   вне изображения или по кнопке закрытия `Escape`. Компонент будет реализован с
+   помощью `createPortal` из `react-dom`. В компонент добавляется querySelector
+   поиск по id, а в файл `index.html` добавляется DOM-элемент следующей
+   структуры:
+
+```tsx
+// Modal.tsx
+const modalRoot = document.querySelector('#modal-root') as HTMLElement;
+```
+
+<br>
+
+```html
+<!-- index.html -->
+<body>
+  ...
+  <div id="modal-root"></div>
+</body>
+```
+
+6. **Оптимизация загрузки и работа с состоянием**: Я добавлю компонент
+   `<Loader>` для отображения спиннера во время загрузки изображений, чтобы
+   улучшить пользовательский опыт. Также настрою обработчики для сброса
+   состояния `images` и `page` при новом поисковом запросе и сохраню логику
+   управления состоянием в корневом компоненте.
+   <!-- ignore-prettier -->
+   <br>
+
+В ходе создания приложения я изучу работу с асинхронными запросами, управление
+состоянием, обработку ошибок и уведомлений. Это позволит мне лучше понять
+взаимодействие компонентов и организацию запросов в React-приложениях, а также
+расширить навыки работы с API и компонентами, такими как модальные окна и
+пагинация.
