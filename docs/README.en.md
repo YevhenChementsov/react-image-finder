@@ -49,7 +49,7 @@ state = {
 https://pixabay.com/api/?q=cat&page=1&key=your_key&image_type=photo&orientation=horizontal&per_page=12
 ```
 
-Pixabay API supports pagination, by default the `page` parameter is `1`. В
+Pixabay API supports pagination, by default the `page` parameter is `1`. In
 response should come 12 objects at a time. This is set in the parameter
 `per_page`. When searching for a new keyword, you should reset `page` to `1`.
 
